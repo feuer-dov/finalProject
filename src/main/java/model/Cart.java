@@ -10,20 +10,20 @@ public class Cart {
 		cart = new ArrayList<Item>();
 	}
 	
-	public void addItem(int id) {
+	public void addItem(Item item) {
 		// Check if item id is found and increase quantity by 1]
+		
 		boolean itemFound = false;
-		for(Item item: cart) {
-			if(item.getId() == id) {
-//				int oldQty = item.getQuantity();
-//				item.setOrderedQty(oldQty + 1);
+		for(Item i: cart) {
+			if(i.getId() == item.getId()) {
+				i.setQtyOrdered(i.getQtyOrdered() + item.getQtyOrdered());
 				itemFound = true;
 				break;
 			}
 		}
 		
 		if(!itemFound) {
-			
+			cart.add(item);
 		}
 		
 	}
@@ -38,7 +38,12 @@ public class Cart {
 	}
 	
 	public void update(int id, int newQty) {
-		//TODO
+		for(Item item: cart) {
+			if(item.getId() == id) {
+				item.setQtyOrdered(newQty);;
+				break;
+			}
+		}
 		
 	}
 	
