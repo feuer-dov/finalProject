@@ -68,7 +68,7 @@ public class ViewUsers extends HttpServlet {
 		
 		request.setAttribute("users", users);
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("ViewUsers.jsp");
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/ViewUsers.jsp");
 		dispatch.include(request, response);
 	}
 

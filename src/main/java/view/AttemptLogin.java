@@ -54,7 +54,7 @@ public class AttemptLogin extends HttpServlet {
 			}
 				dispatch.include(request, response);
 		}else {
-			RequestDispatcher dispatch = request.getRequestDispatcher("welcome.jsp");
+			RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/LoginPage.jsp");
 			System.out.println("LOGIN ERROR");
 			request.setAttribute("returnValue", "4");
 			dispatch.include(request, response);
