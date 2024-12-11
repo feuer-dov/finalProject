@@ -49,7 +49,7 @@ public class CreateAccountServlet extends HttpServlet {
 			request.setAttribute("returnValue", "1");
 		}
 		System.out.println(request.getAttribute("returnValue"));
-		RequestDispatcher dispatch = request.getRequestDispatcher("LoginPage.jsp");
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/LoginPage.jsp");
 		dispatch.forward(request, response);
 	}
 

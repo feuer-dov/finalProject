@@ -39,7 +39,7 @@ public class SalesHistory extends HttpServlet {
 		
 		
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("SalesHistory.jsp");
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/SalesHistory.jsp");
 		dispatch.include(request, response);
 	}
 

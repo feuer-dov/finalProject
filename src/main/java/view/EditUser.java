@@ -40,7 +40,7 @@ public class EditUser extends HttpServlet {
 		
 		request.setAttribute("userAccount", account);
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("EditUser.jsp");
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/EditUser.jsp");
 		dispatch.include(request, response);
 		
 	}

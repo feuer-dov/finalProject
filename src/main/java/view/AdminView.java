@@ -47,7 +47,7 @@ public class AdminView extends HttpServlet {
 		List<Item> items = db.getAllItems();
 		request.setAttribute("items", items);
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("AdminView.jsp");
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/AdminView.jsp");
 		dispatch.include(request, response);
 	}
 

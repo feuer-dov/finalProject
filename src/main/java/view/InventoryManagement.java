@@ -54,7 +54,7 @@ public class InventoryManagement extends HttpServlet {
 		List<Item> items = db.getAllItems();
 		request.setAttribute("Items", items);
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("InventoryManagement.jsp");
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/InventoryManagement.jsp");
 		dispatch.include(request, response);
 		
 	}
