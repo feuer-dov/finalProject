@@ -523,7 +523,196 @@ public class Database {
 		
 		return items;
 	}
-
+	
+	/*
+	 * Takes category name as parameter and returns an ArrayList of Items with category = parameter name
+	 */
+	public ArrayList<Item> getItemsByName(String name){
+		ArrayList<Item> items = new ArrayList<Item>();
+		Connection con = null;
+		PreparedStatement statement = null;
+		String sql = "SELECT * FROM ITEMS;";
+		
+		try {
+			con = getConnection();
+			statement = con.prepareStatement(sql);
+			ResultSet r = statement.executeQuery();
+			
+			while(r.next()) {
+				
+				String catName = r.getString(1);
+				
+				if(catName.equals(name)) {
+					Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6), r.getInt(7));
+					items.add(i);
+				}
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			closeConnection(con);
+		}
+		
+		return items;
+	}
+	
+	
+	/*
+	 * When called, gathers all unique category names from the database and
+	 * returns them in an ArrayList
+	 */
+	public ArrayList<String> getAllCatNames(){
+		ArrayList<String> catNames = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement statement = null;
+		String sql = "SELECT * FROM ITEMS;";
+		
+		try {
+			con = getConnection();
+			statement = con.prepareStatement(sql);
+			ResultSet r = statement.executeQuery();
+			
+			while(r.next()) {
+				if(!(catNames.contains(r.getString(4)))) {
+					catNames.add(r.getString(4));
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			closeConnection(con);
+		}
+		
+		return catNames;
+	}
+	
+	
+	/*
+	 * When called, provides an ArrayList of all unique Brands in the Database
+	 */
+	public ArrayList<String> getAllBrandNames(){
+		ArrayList<String> brandNames = new ArrayList<String>();
+		Connection con = null;
+		PreparedStatement statement = null;
+		String sql = "SELECT * FROM ITEMS";
+		
+		try {
+			con = getConnection();
+			statement = con.prepareStatement(sql);
+			ResultSet r = statement.executeQuery();
+			
+			while(r.next()){
+				if(!(brandNames.contains(r.getString(5)))) {
+					brandNames.add(r.getString(5));
+				}
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			closeConnection(con);
+		}
+		
+		return brandNames;
+	}
+	
+	
+	/*
+	 * Takes a catName as parameter and returns an ArrayList of Items with category = catName
+	 * returns an empty ArrayList if there is nothing matching catName
+	 * returns null if error occurs
+	 */
+	public ArrayList<Item> getAllItemsByCat(String catName){
+		ArrayList<Item> items = new ArrayList<Item>();
+		Connection con = null;
+		PreparedStatement statement = null;
+		String sql = "SELECT * FROM ITEMS;";
+		
+		try {
+			con = getConnection();
+			statement = con.prepareStatement(sql);
+			ResultSet r = statement.executeQuery();
+			
+			while(r.next()) {
+				if(catName.equals(r.getString(4))) {
+					Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6), r.getInt(7));
+					items.add(i);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			closeConnection(con);
+		}
+		return items;
+	}
+	
+	
+	/*
+	 * Takes brandName as parameter and returns an ArrayList of all Items with
+	 * brandName = Items brandName
+	 */
+	public ArrayList<Item> getItemsByBrand(String brandName){
+		ArrayList<Item> items = new ArrayList<Item>();
+		Connection con = null;
+		PreparedStatement statement = null;
+		String sql = "SELECT * FROM ITEMS;";
+		
+		try {
+			con = getConnection();
+			statement = con.prepareStatement(sql);
+			ResultSet r = statement.executeQuery();
+			
+			while(r.next()) {
+				if(brandName.equals(r.getString(5))) {
+					Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6), r.getInt(7));
+					items.add(i);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			closeConnection(con);
+		}
+		
+		return items;
+	}
 	
 	//**************************SALES*********************************//
 	
