@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Cart;
+import model.Item;
 
 
 /**
@@ -49,14 +50,20 @@ public class ShoppingCartServlet extends HttpServlet {
    	         }
    	      }
 	    
-   	      
+   	    Database db = new Database(getServletContext());
+   	    
 		try {
 			String action = request.getParameter("action");
 			String itemIDString = request.getParameter("itemID");
 			int itemID = Integer.parseInt(itemIDString);
-
+			
 	   	  
-	 
+			if(action.equals("add")) {
+				int qty = Integer.parseInt(request.getParameter("qty"));
+				Item item = db.getItem(itemID);
+				item.setQtyOrdered(qty);
+				cart.addItem(item);
+			}
 			if(action.equals("increase")) {
 				System.out.println("Increase quantity!!!!!");
 				// 1 item added to cart instance
