@@ -2,7 +2,6 @@ package controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
@@ -19,7 +18,7 @@ import model.Account;
 import model.Item;
 import model.Sale;
 
-public class Database {
+public class Database implements DatabaseInterface{
 	private ServletContext context;
 	String addUserSQL = "INSERT INTO ACCOUNTS (Full_Name, Credit_Card, Shipping_Address, Username, Password, Privilege, Billing_Address) VALUES(?, ?, ?, ?, ?, ?, ?);";
 	static {
@@ -33,12 +32,14 @@ public class Database {
 		this.context = context;
 	}
 	
-	private Connection getConnection() throws SQLException{
+	
+	public Connection getConnection() throws SQLException{
 		String path = context.getRealPath("4413Database.db");
 		return DriverManager.getConnection("jdbc:sqlite:" + path);
 	}
 	
-	private void closeConnection(Connection con) {
+	
+	public void closeConnection(Connection con) {
 		if(con == null)
 			return;
 		else {

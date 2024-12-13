@@ -20,6 +20,18 @@ public class Item {
 		this.stock = s;
 	}
 	
+	//For Creating an Item once someone has ordered it (With qty ordered)
+	public Item(String n, int i, String d, String c, String b, int p, int s, int qtyOrdered) {
+		this.name = n;
+		this.id = i;
+		this.description = d;
+		this.category_Name = c;
+		this.brand = b;
+		this.price = p;
+		this.stock = s;
+		this.qtyOrdered = qtyOrdered;
+	}
+	
 	public Item(String name, int id) {
 		this.name = name;
 		this.id = id;
