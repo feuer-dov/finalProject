@@ -57,7 +57,7 @@ public class CheckoutServlet extends HttpServlet {
 		    Sale sale = new Sale(acc.getName(), itemId, itemName, quantity, transactionId);
 		    session.setAttribute("sale", sale);
 		    
-		    String target = "OrderConfirmation";
+		    String target = "CheckoutView.jsp";
 		    request.getRequestDispatcher(target).forward(request, response);
 		    
 		} else {
