@@ -141,7 +141,7 @@
         </div>
         <div>
             <!-- Add a login link or button here -->
-            <a href="login.jsp">Login</a>
+            <a href="AttemptLogin">Login</a>
         </div>
     </header>
     
