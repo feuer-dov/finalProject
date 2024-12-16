@@ -182,7 +182,7 @@ public class CatalogServlet extends HttpServlet {
     	        cart.addItem(item);
 
     	        // Redirect to cart page
-    	        response.sendRedirect("/jsp/cart.jsp");
+    	        response.sendRedirect("jsp/cart.jsp");
     	    } catch (NumberFormatException e) {
     	        throw new ServletException("Invalid product or quantity", e);
     	    }
