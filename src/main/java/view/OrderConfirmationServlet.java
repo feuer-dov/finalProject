@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Account;
 import model.Sale;
 import controller.Database;
 
@@ -46,8 +47,21 @@ public class OrderConfirmationServlet extends HttpServlet {
 		out.println("<html>");
 		out.println("<h1>Thank you for Ordering. </h1>");
 		out.println("<body>");
-		out.println("<b>" + request.getParameter("billing") + "</b>");
-		out.println("<b>" + request.getParameter("shipping") + "</b>");
+		
+		String billing = request.getParameter("billing");
+		String shipping = request.getParameter("shipping");
+		String card = request.getParameter("card");
+		
+		out.println("<b>" + billing + "</b>");
+		out.println("<b>" + shipping + "</b>");
+		out.println("<b>" + card + "</b>");
+		
+		//update account in db
+		Account acc = db.getAccount(sale.getCustName());
+		acc.setBillingAddress(billing);
+		acc.setShipAddress(shipping);
+		acc.setCreditCard(card);
+		db.updateAccount(acc.getName(), acc);
 		
 		out.println("</body></html>");
 		
