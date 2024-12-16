@@ -54,7 +54,7 @@ public class ShoppingCartServlet extends HttpServlet {
    	    
 		try {
 			String action = request.getParameter("action");
-			String itemIDString = request.getParameter("itemID");
+			String itemIDString = request.getParameter("itemId");
 			int itemID = Integer.parseInt(itemIDString);
 			
 	   	  
@@ -74,12 +74,13 @@ public class ShoppingCartServlet extends HttpServlet {
 			}
 			if(action.equals("remove")) {
 				System.out.println("Remove item!!!!!");
-				cart.removeItem(itemID);
 				// Entire item removed from cart instance
+				
+				
 			}
 		}
 		catch(Exception e) {
-			
+			System.out.println("Exception caught in Shopping Cart");
 		}
 		
 		if(cart.getItems().size() == 0) {
