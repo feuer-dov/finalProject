@@ -1,11 +1,15 @@
 <%@ page import="java.util.List" %>
-<%@ page import="model.Product" %>
-<%@ page import="model.Category" %>
-<%@ page import="model.Brand" %>
+<%@ page import="model.Item" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.*" %>
 <%
-    List<Product> products = (List<Product>) request.getAttribute("products");
-    List<Category> categories = (List<Category>) request.getAttribute("categories");
-    List<Brand> brands = (List<Brand>) request.getAttribute("brands");
+    // Since we refactored from Product/Category/Brand to Item with category & brand as strings,
+    // we assume the request attributes have changed accordingly. 
+    // Adjust your controller to set attributes "items", "categories", and "brands" as Lists of Strings.
+
+    List<Item> items = (List<Item>) request.getAttribute("items");
+    List<String> categories = (List<String>) request.getAttribute("categories");
+    List<String> brands = (List<String>) request.getAttribute("brands");
 %>
 <html>
 <head>
@@ -13,6 +17,25 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 10px;
+            color: #fff;
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        header a:hover {
+            text-decoration: underline;
         }
 
         .container {
@@ -112,22 +135,33 @@
     </style>
 </head>
 <body>
-    <h1>Product Catalog</h1>
+    <header>
+        <div>
+            <h1 style="margin:0; font-size:1.5em;">Product Catalog</h1>
+        </div>
+        <div>
+            <!-- Add a login link or button here -->
+            <a href="login.jsp">Login</a>
+        </div>
+    </header>
+    
     <div class="container">
         <div class="sidebar">
             <h2>Categories</h2>
             <ul>
                 <li><a href="catalog?action=list">All Products</a></li>
-                <% for (Category category : categories) { %>
-                    <li><a href="catalog?action=list&categoryId=<%= category.getId() %>"><%= category.getName() %></a></li>
-                <% } %>
+                <% if (categories != null) {
+                     for (String cat : categories) { %>
+                    <li><a href="catalog?action=list&categoryName=<%= cat %>"><%= cat %></a></li>
+                <% }} %>
             </ul>
 
             <h2>Brands</h2>
             <ul>
-                <% for (Brand brand : brands) { %>
-                    <li><a href="catalog?action=list&brandId=<%= brand.getId() %>"><%= brand.getName() %></a></li>
-                <% } %>
+                <% if (brands != null) {
+                     for (String br : brands) { %>
+                    <li><a href="catalog?action=list&brandName=<%= br %>"><%= br %></a></li>
+                <% }} %>
             </ul>
         </div>
         <div class="content">
@@ -141,12 +175,12 @@
 
             <h2>Products</h2>
             <ul>
-                <% if (products != null && !products.isEmpty()) {
-                     for (Product product : products) { %>
+                <% if (items != null && !items.isEmpty()) {
+                     for (Item item : items) { %>
                         <li>
-                            <a href="catalog?action=details&productId=<%= product.getId() %>">
-                                <%= product.getName() %>
-                            </a> - $<%= product.getPrice() %>
+                            <a href="catalog?action=details&productId=<%= item.getId() %>">
+                                <%= item.getName() %>
+                            </a> - $<%= item.getPrice() %>
                         </li>
                     <% }
                    } else { %>

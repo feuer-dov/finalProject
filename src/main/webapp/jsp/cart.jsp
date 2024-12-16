@@ -1,14 +1,10 @@
-<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 <%@ page import="model.Cart" %>
-<%@ page import="model.Product" %>
-<%@ page import="controller.ProductDAO" %>
-<%@ page import="controller.ProductDAOImpl" %>
-<%@ page import="controller.DatabaseUtils" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.SQLException" %>
+<%@ page import="model.Item" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 
 <%
+    // Retrieve the cart from session
     Cart cart = (Cart) session.getAttribute("cart");
     if (cart == null || cart.getItems().isEmpty()) {
 %>
@@ -16,43 +12,40 @@
     <a href="catalog?action=list">Continue Shopping</a>
 <%
     } else {
-        try {
-            Connection connection = DatabaseUtils.getConnection();
-            ProductDAO productDAO = new ProductDAOImpl(connection);
+        List<Item> items = cart.getItems();
+        double total = 0; // Initialize total cost
 %>
     <h1>Your Shopping Cart</h1>
     <table border="1">
         <tr>
             <th>Product</th>
             <th>Quantity</th>
+            <th>Price</th>
             <th>Subtotal</th>
         </tr>
     <%
-            double total = 0;
-            for (Map.Entry<Integer, Integer> entry : cart.getItems().entrySet()) {
-                int productId = entry.getKey();
-                int quantity = entry.getValue();
-                Product product = productDAO.getProduct(productId);
-                double subtotal = product.getPrice() * quantity;
-                total += subtotal;
+        // Iterate through the list of items in the cart
+        for (Item item : items) {
+            int quantity = item.getQtyOrdered();
+            double price = item.getPrice();
+            double subtotal = price * quantity;
+            total += subtotal; // Add to total
     %>
         <tr>
-            <td><%= product.getName() %></td>
+            <td><%= item.getName() %></td>
             <td><%= quantity %></td>
-            <td>$<%= subtotal %></td>
+            <td>$<%= price %></td>
+            <td>$<%= String.format("%.2f", subtotal) %></td>
         </tr>
     <%
-            }
+        }
     %>
         <tr>
-            <td colspan="2"><strong>Total</strong></td>
-            <td><strong>$<%= total %></strong></td>
+            <td colspan="3" style="text-align:right;"><strong>Total</strong></td>
+            <td><strong>$<%= String.format("%.2f", total) %></strong></td>
         </tr>
     </table>
     <a href="catalog?action=list">Continue Shopping</a>
 <%
-        } catch (SQLException e) {
-            out.println("<p>Error retrieving cart items.</p>");
-        }
     }
 %>

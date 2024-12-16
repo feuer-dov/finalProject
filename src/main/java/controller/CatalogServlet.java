@@ -1,7 +1,9 @@
 package controller;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,33 +14,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.BrandDAO;
-import controller.BrandDAOImpl;
-import controller.CategoryDAO;
-import controller.CategoryDAOImpl;
-import controller.ProductDAO;
-import controller.ProductDAOImpl;
-import model.Brand;
 import model.Cart;
-import model.Category;
-import model.Product;
+import model.Item;
+
 @WebServlet("/catalog")
 public class CatalogServlet extends HttpServlet {
-    private ProductDAO productDAO;
-    private CategoryDAO categoryDAO;
-    private BrandDAO brandDAO;
+    private Database database;
 
     @Override
     public void init() throws ServletException {
         try {
-            Connection connection = DatabaseUtils.getConnection();
-            productDAO = new ProductDAOImpl(connection);
-            categoryDAO = new CategoryDAOImpl(connection);
-            brandDAO = new BrandDAOImpl(connection);
-        } catch (SQLException e) {
-            throw new ServletException("Unable to initialize DAOs", e);
+            // Initialize the Database instance with ServletContext
+            this.database = new Database(getServletContext());
+            System.out.println("Database initialized successfully.");
+        } catch (Exception e) {
+            System.err.println("Error initializing database: " + e.getMessage());
+            e.printStackTrace();
+            throw new ServletException("Database initialization failed.", e);
         }
     }
+
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,13 +43,13 @@ public class CatalogServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null || action.equals("list")) {
-            // Default action: list products
-            listProducts(request, response);
+            // Default action: list items
+            listItems(request, response);
         } else if (action.equals("details")) {
-            // Show product details
-            showProductDetails(request, response);
+            // Show item details
+            showItemDetails(request, response);
         } else if (action.equals("addToCart")) {
-            // Add product to cart
+            // Add item to cart
             addToCart(request, response);
         } else {
             // Unknown action, redirect to catalog
@@ -68,36 +64,53 @@ public class CatalogServlet extends HttpServlet {
         doGet(request, response);
     }
 
-    private void listProducts(HttpServletRequest request, HttpServletResponse response)
+    private void listItems(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String searchQuery = request.getParameter("searchQuery");
-        String categoryIdStr = request.getParameter("categoryId");
-        String brandIdStr = request.getParameter("brandId");
+        String categoryName = request.getParameter("categoryName");
+        String brandName = request.getParameter("brandName");
 
-        List<Product> products;
+        List<Item> items;
 
-        try {
-            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-                // If there's a search query, filter products by the query
-                products = productDAO.searchProductsByName(searchQuery);
-            } else if (categoryIdStr != null) {
-                int categoryId = Integer.parseInt(categoryIdStr);
-                products = productDAO.getProductsByCategory(categoryId);
-            } else if (brandIdStr != null) {
-                int brandId = Integer.parseInt(brandIdStr);
-                products = productDAO.getProductsByBrand(brandId);
-            } else {
-                products = productDAO.getAllProducts();
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            // If there's a search query, filter items by the query
+            // In the original code, search was by product name.
+            // We assume database.getItemsByName(...) does a similar function.
+            items = database.getItemsByName(searchQuery);
+            if (items == null) {
+                items = new ArrayList<>();
             }
-        } catch (NumberFormatException e) {
-            // If categoryId or brandId are invalid, just fallback to all products
-            products = productDAO.getAllProducts();
+        } else if (categoryName != null && !categoryName.trim().isEmpty()) {
+            // Filter by category
+            items = database.getAllItemsByCat(categoryName);
+            if (items == null) {
+                items = new ArrayList<>();
+            }
+        } else if (brandName != null && !brandName.trim().isEmpty()) {
+            // Filter by brand
+            items = database.getItemsByBrand(brandName);
+            if (items == null) {
+                items = new ArrayList<>();
+            }
+        } else {
+            // Otherwise, get all items
+            items = database.getAllItems();
+            if (items == null) {
+                items = new ArrayList<>();
+            }
         }
 
-        List<Category> categories = categoryDAO.getAllCategories();
-        List<Brand> brands = brandDAO.getAllBrands();
+        // Get all categories and brands
+        List<String> categories = database.getAllCatNames();
+        if (categories == null) {
+            categories = new ArrayList<>();
+        }
+        List<String> brands = database.getAllBrandNames();
+        if (brands == null) {
+            brands = new ArrayList<>();
+        }
 
-        request.setAttribute("products", products);
+        request.setAttribute("items", items);
         request.setAttribute("categories", categories);
         request.setAttribute("brands", brands);
 
@@ -105,8 +118,7 @@ public class CatalogServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-
-    private void showProductDetails(HttpServletRequest request, HttpServletResponse response)
+    private void showItemDetails(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String productIdStr = request.getParameter("productId");
 
@@ -117,46 +129,64 @@ public class CatalogServlet extends HttpServlet {
 
         try {
             int productId = Integer.parseInt(productIdStr);
-            Product product = productDAO.getProduct(productId);
+            Item item = database.getItem(productId);
 
-            if (product == null) {
+            if (item == null) {
                 response.sendRedirect("catalog?action=list");
                 return;
             }
 
-            request.setAttribute("product", product);
+            request.setAttribute("item", item);
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/productDetails.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/productDetails.jsp");
             dispatcher.forward(request, response);
         } catch (NumberFormatException e) {
-            throw new ServletException("Error retrieving product details", e);
+            throw new ServletException("Error retrieving item details", e);
         }
     }
 
     private void addToCart(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        String productIdStr = request.getParameter("productId");
+    	    throws IOException, ServletException {
+    	    String productIdStr = request.getParameter("productId");
+    	    String quantityStr = request.getParameter("quantity");
 
-        if (productIdStr == null) {
-            response.sendRedirect("catalog?action=list");
-            return;
-        }
+    	    if (productIdStr == null) {
+    	        response.sendRedirect("catalog?action=list");
+    	        return;
+    	    }
 
-        try {
-            int productId = Integer.parseInt(productIdStr);
+    	    try {
+    	        int productId = Integer.parseInt(productIdStr);
+    	        int quantity = 1;
+    	        if (quantityStr != null && !quantityStr.isEmpty()) {
+    	            quantity = Integer.parseInt(quantityStr);
+    	        }
 
-            HttpSession session = request.getSession();
-            Cart cart = (Cart) session.getAttribute("cart");
-            if (cart == null) {
-                cart = new Cart();
-                session.setAttribute("cart", cart);
-            }
-            cart.addProduct(productId);
+    	        Item item = database.getItem(productId);
+    	        if (item == null) {
+    	            response.sendRedirect("catalog?action=list");
+    	            return;
+    	        }
 
-            // Redirect to the cart page
-            response.sendRedirect("/jsp/cart.jsp");//this line is only a place holder,I build a simple cart.jsp for demo only replace cart.jsp with the latter one you designed
-        } catch (NumberFormatException e) {
-            throw new ServletException("Invalid product ID", e);
-        }
+    	        // Set the ordered quantity
+    	        item.setQtyOrdered(quantity);
+
+    	        HttpSession session = request.getSession();
+    	        Cart cart = (Cart) session.getAttribute("cart");
+    	        if (cart == null) {
+    	            cart = new Cart();
+    	            session.setAttribute("cart", cart);
+    	        }
+
+    	        // Add item to cart
+    	        cart.addItem(item);
+
+    	        // Redirect to cart page
+    	        response.sendRedirect("/jsp/cart.jsp");
+    	    } catch (NumberFormatException e) {
+    	        throw new ServletException("Invalid product or quantity", e);
+    	    }
+    	}
+
     }
-}
+
