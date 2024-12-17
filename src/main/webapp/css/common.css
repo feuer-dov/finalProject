@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+@charset "UTF-8";
+
+/* CSS variables */
+:root {
+	--color-primary: #ff9900;
+	--color-secondary: #146eb4;
+	--color-button-hover: #b6b6b6;
+	--color-text: black;
+}
+

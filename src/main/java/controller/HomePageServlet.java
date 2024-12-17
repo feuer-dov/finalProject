@@ -33,11 +33,33 @@ public class HomePageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DatabaseInterface db = new Database(getServletContext());
-			
-		List<Item> allItems = db.getAllItems();
 		
-		request.setAttribute("allItems", allItems);
+	
 		
+//		List<String> categories = db.getAllCatNames();
+//		List<String> brands = db.getAllBrandNames();
+//
+//
+//		request.setAttribute("categories", categories); // pass cats to list in jsp sidebar
+//		request.setAttribute("brands", brands); // pass brands to list in jsp sidebar
+//		
+	
+		String category = request.getParameter("category");
+		String brand = request.getParameter("brand");
+		
+		List<Item> itemsToDisplay;
+		
+		if(category != null) {
+			itemsToDisplay = db.getAllItemsByCat(category);
+		}
+		else if(brand != null) {
+			itemsToDisplay = db.getItemsByBrand(brand);
+		}
+		else {
+			itemsToDisplay = db.getAllItems();
+		}
+		
+		request.setAttribute("itemsToDisplay", itemsToDisplay);
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/HomePage.jsp");
 		rd.forward(request, response);
 	}

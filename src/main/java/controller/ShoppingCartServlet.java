@@ -67,6 +67,7 @@ public class ShoppingCartServlet extends HttpServlet {
 			if(action.equals("increase")) {
 				System.out.println("Increase quantity!!!!!");
 				// 1 item added to cart instance
+				
 			}
 			if(action.equals("decrease")) {
 				System.out.println("Decrease quantity!!!!!");

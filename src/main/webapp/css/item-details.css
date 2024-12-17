@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.container {
+	display: flex;
+	gap: 20px;
+}
+
+.item-details {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+    flex-wrap: wrap;  /* Allow the content to wrap if necessary */
+}
+

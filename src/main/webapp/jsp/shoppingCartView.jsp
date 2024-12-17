@@ -35,14 +35,14 @@
 						<tr>
 							<td>
 								<form method='get'>
-									<input type='hidden' name='itemID' value='1000' /> <input
+									<input type='hidden' name='itemId' value=${item.id } /> <input
 										type='hidden' name='action' value='increase' /> <input
 										type='submit' value='Increase' />
 								</form>
 							</td>
 							<td>
 								<form>
-									<input type='hidden' name='itemID' value='1000' /> <input
+									<input type='hidden' name='itemId' value=${item.id } /> <input
 										type='hidden' name='action' value='decrease' /> <input
 										type='submit' value='Decrease' />
 								</form>
@@ -53,7 +53,7 @@
 				</td>
 				<td>
 					<form>
-						<input type='hidden' name='itemID' value=${item.id } /> 
+						<input type='hidden' name='itemId' value=${item.id } /> 
 						<input type='hidden' name='action' value='remove' /> 
 						<input type='submit' value='Remove' />
 					</form>
@@ -75,7 +75,7 @@
 		<input type='submit' value='Go to Checkout' />
 	</form>
 	<br>
-	<a href="index.html">Keep Shopping</a>
+	<a href="/final/home">Keep Shopping</a>
 
 </body>
 </html>

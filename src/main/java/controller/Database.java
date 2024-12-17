@@ -349,7 +349,7 @@ public class Database implements DatabaseInterface{
 			statement.setString(3, item.getDescription());
 			statement.setString(4, item.getCategoryName());
 			statement.setString(5, item.getBrand());
-			statement.setInt(6, item.getPrice());
+			statement.setDouble(6, item.getPrice());
 			statement.setInt(7, item.getStock());
 			
 			statement.executeUpdate();
@@ -383,7 +383,7 @@ public class Database implements DatabaseInterface{
 			ResultSet r = statement.executeQuery();
 			while(r.next()) {
 				if(r.getInt(2) == id) {
-					item = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6), r.getInt(7));
+					item = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getDouble(6), r.getInt(7));
 					break;
 				}
 			}
@@ -507,7 +507,7 @@ public class Database implements DatabaseInterface{
 			ResultSet r = statement.executeQuery();
 			
 			while(r.next()) {
-				item = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6), r.getInt(7));
+				item = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getDouble(6), r.getInt(7));
 				items.add(item);
 			}
 		}catch(SQLException e) {
@@ -544,7 +544,7 @@ public class Database implements DatabaseInterface{
 				String catName = r.getString(1);
 				
 				if(catName.equals(name)) {
-					Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6), r.getInt(7));
+					Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getDouble(6), r.getInt(7));
 					items.add(i);
 				}
 				
@@ -574,7 +574,7 @@ public class Database implements DatabaseInterface{
 		ArrayList<String> catNames = new ArrayList<String>();
 		Connection con = null;
 		PreparedStatement statement = null;
-		String sql = "SELECT * FROM ITEMS;";
+		String sql = "SELECT * FROM ITEMS ORDER BY Category_Name;";
 		
 		try {
 			con = getConnection();
@@ -611,7 +611,7 @@ public class Database implements DatabaseInterface{
 		ArrayList<String> brandNames = new ArrayList<String>();
 		Connection con = null;
 		PreparedStatement statement = null;
-		String sql = "SELECT * FROM ITEMS";
+		String sql = "SELECT * FROM ITEMS ORDER BY Brand";
 		
 		try {
 			con = getConnection();
@@ -658,7 +658,7 @@ public class Database implements DatabaseInterface{
 			
 			while(r.next()) {
 				if(catName.equals(r.getString(4))) {
-					Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6), r.getInt(7));
+					Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getDouble(6), r.getInt(7));
 					items.add(i);
 				}
 			}
@@ -695,7 +695,7 @@ public class Database implements DatabaseInterface{
 			
 			while(r.next()) {
 				if(brandName.equals(r.getString(5))) {
-					Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6), r.getInt(7));
+					Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getDouble(6), r.getInt(7));
 					items.add(i);
 				}
 			}
