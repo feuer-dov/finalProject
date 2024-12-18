@@ -8,7 +8,7 @@
 }
 
 
-.container {
+.horiz-container {
 	display: flex;
 	gap: 20px;
 }

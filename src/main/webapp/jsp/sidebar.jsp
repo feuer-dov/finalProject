@@ -3,7 +3,11 @@
 
 <div class='sidebar'>
 	<form action='home'>
-		<input type='submit' value='All' />
+		<input type='submit' value='All (A-Z)' />
+	</form>
+	<form action='home'>
+		<input type='submit' value='All (By Price)' />
+		<input type='hidden' name='byPrice' value='true'/>
 	</form>
 	<h3>Categories</h3>
 	<c:forEach var="cat" items="${categories }">

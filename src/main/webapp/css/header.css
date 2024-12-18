@@ -1,1 +1,18 @@
 @charset "UTF-8";
+
+.header-container{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 10px 20px;
+	background-color: #3498db;
+	color: white;    
+}
+
+.logo-container input[type="image"] {
+    width: 100px;  /* Adjust the size of the logo */
+    height: auto;  /* Keep the aspect ratio intact */
+    border: none;
+    cursor: pointer;
+}
