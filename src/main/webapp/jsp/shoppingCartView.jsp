@@ -1,81 +1,82 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Shopping Cart</title>
-<link rel="stylesheet" href="css/styles.css">
+
+
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/shopping-cart.css">
+</head>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="css/shopping-cart.css">
 </head>
 <body>
-	<h1>Shopping Cart</h1>
-	<table border='1' cellpadding='6'>
-		<tr>
-			<th>Item Name</th>
-			<th>Item ID</th>
-			<th>Description</th>
-			<th>Brand</th>
-			<th>Price Per Item</th>
-			<th>Quantity</th>
-			<th>Increase/Decrease Quantity</th>
-			<th>Remove Item</th>
-		</tr>
-		<c:forEach items="${cart.items}" var="item">
-			<tr>
-				<td>${item.name}</td>
-				<td>${item.id }</td>
-				<td>${item.description }</td>
-				<td>${item.brand }</td>
-				<td>${item.price }</td>
-				<td>1</td>
-				<td>
-					<table>
-						<tr>
-							<td>
-								<form method='get'>
-									<input type='hidden' name='itemId' value=${item.id } /> <input
-										type='hidden' name='action' value='increase' /> <input
-										type='submit' value='Increase' />
-								</form>
-							</td>
-							<td>
-								<form>
-									<input type='hidden' name='itemId' value=${item.id } /> <input
-										type='hidden' name='action' value='decrease' /> <input
-										type='submit' value='Decrease' />
-								</form>
-							</td>
+    <h1>Shopping Cart</h1>
 
-						</tr>
-					</table>
-				</td>
-				<td>
-					<form>
-						<input type='hidden' name='itemId' value=${item.id } /> 
-						<input type='hidden' name='action' value='remove' /> 
-						<input type='submit' value='Remove' />
-					</form>
-				</td>
+    <c:if test="${cart != null and cart.isEmpty() == false}">
+        <div class="cart-items-container">
+            <c:forEach items="${cart.items}" var="item">
+                <div class='cart-item-view'>
+                    <div class="item-image">
+                        <img src="https://via.placeholder.com/300" alt="${item.name}" />
+                    </div>
+                    <div class="item-details">
+                        <h2>${item.name}</h2>
+                        <p>${item.description}</p>
+                        <p>Brand: ${item.brand}</p>
+                        <p>Price: $<fmt:formatNumber value="${item.price}" pattern="#0.00" /></p>
+                    </div>
 
-			</tr>
-		</c:forEach>
+                    <form method="GET">
+                        <select name="qty" id="quantity" onchange="this.form.submit()">
+                            <c:forEach var="i" begin="1" end="${item.stock}">
+                                <option value="${i}" <c:if test="${item.qtyOrdered == i }">selected</c:if>>${i}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="hidden" name="itemId" value="${item.id}" />
+                        <input type="hidden" name="action" value="updateQty" />
+                    </form>
 
-		<tr>
-			<td colspan='5'>Total Price: $20.99</td>
+             
+                    <form method="GET">
+                        <input type="hidden" name="itemId" value="${item.id}" />
+                        <input type="hidden" name="action" value="remove" />
+                        <input type="submit" value="Remove" />
+                    </form>
+                </div>
+            </c:forEach>
+        </div>
+		<div class='summary-container'>
+		
+        <div class="total-price">
+            <p>Total Price: $<fmt:formatNumber value="${cart.total}" pattern="#0.00" /></p>
+        </div>
+         
+    	<form action="CheckoutServlet" method="GET">
+        	<input type="submit" value="Go to Checkout" />
+    	</form>
+    	
+    	</div>
+    </c:if>
 
-		</tr>
+    <c:if test="${cart == null or cart.isEmpty()}">
+        <h2>Your cart is empty!</h2>
+    </c:if>
 
+   
 
-	</table>
-	<br>
-	<form action='CheckoutServlet' method='get'>
-
-		<input type='submit' value='Go to Checkout' />
-	</form>
-	<br>
-	<a href="/final/home">Keep Shopping</a>
-
+    <br>
+    <a href="/final/home">Keep Shopping</a>
 </body>
 </html>

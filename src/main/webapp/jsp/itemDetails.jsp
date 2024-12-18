@@ -17,23 +17,31 @@
 	<div class="container">
 		<jsp:include page='sidebar.jsp' />
 		<div class='item-details'>
-			<h2>${item.name }</h2>
+			<div class="item-image">
+                <img src="https://via.placeholder.com/300" alt="${item.name}" />
+            </div>
+            <div class="item-info">
+            	<h2>${item.name }</h2>
+            	<p class="price">$<fmt:formatNumber value="${item.price}" pattern="#0.00" /></p>
+                <p><strong>Brand:</strong> ${item.brand}</p>
+                <p><strong>Category:</strong> ${item.categoryName}</p>
+                <p><strong>About this item:</strong> ${item.description}</p>
+                
 
-			<p>${item.description }</p>
-			<p>${item.categoryName}</p>
-			<p>${item.brand}</p>
-			<[]>$<fmt:formatNumber value="${item.price}" pattern="#0.00" /></p>
-
-			<form action='ShoppingCart' method='get'>
-				<select name="qty" id="quantity">
-					<c:forEach var="i" begin="1" end="${item.stock}">
-						<option value="${i}">${i}</option>
-					</c:forEach>
-				</select> <input type='hidden' name='action' value='add' /> <input
-					type='hidden' name='itemId' value=${item.id } /> <input
-					type='submit' value='Add to Cart' />
-
-			</form>
+                <!-- Add to Cart Form -->
+                <form action="ShoppingCart" method="get">
+                    <label for="quantity">Quantity:</label>
+                    <select name="qty" id="quantity">
+                        <c:forEach var="i" begin="1" end="${item.stock}">
+                            <option value="${i}">${i}</option>
+                        </c:forEach>
+                    </select>
+                    <input type="hidden" name="action" value="add" />
+                    <input type="hidden" name="itemId" value="${item.id}" />
+                    <input type="submit" value="Add to Cart" />
+                </form>
+            </div>
+			
 		</div>
 	</div>
 
