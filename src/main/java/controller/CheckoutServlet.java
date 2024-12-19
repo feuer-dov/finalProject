@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Account;
+import model.Cart;
+import model.Item;
 import model.Sale;
 
 /**
@@ -50,26 +52,43 @@ public class CheckoutServlet extends HttpServlet {
 		    String creditCard = acc.getCreditCard();
 		    session.setAttribute("def_creditCard", creditCard);
 		    
-		    String itemName = request.getParameter("itemName");
-		    ArrayList<Integer> itemId = new ArrayList<Integer>();
-		    for (String s : request.getParameterValues("itemId")) {
-		    	itemId.add(Integer.parseInt(s));
+//old code from based on shoppingCartView.jsp, will delete later
+//		    String itemName = request.getParameter("itemName");
+//		    ArrayList<Integer> itemId = new ArrayList<Integer>();
+//		    for (String s : request.getParameterValues("itemId")) {
+//		    	itemId.add(Integer.parseInt(s));
+//		    }
+//		    ArrayList<Integer> quantity = new ArrayList<Integer>();
+//		    for (String s : request.getParameterValues("quantity")) {
+//		    	itemId.add(Integer.parseInt(s));
+//		    }
+//		    int transactionId = 0; //TODO figure out how to track this
+//		    Sale sale = new Sale(acc.getName(), itemId, itemName, quantity, transactionId);
+//		    session.setAttribute("sale", sale);
+		    
+		    Cart cart = (Cart) session.getAttribute("cart");
+		    ArrayList<Integer> itemIds = new ArrayList<>();
+		    ArrayList<Integer> quantity = new ArrayList<>();
+		    for (Item item : cart.getItems()) {
+		    	itemIds.add(item.getId());
+		    	quantity.add(item.getQtyOrdered());
 		    }
-		    ArrayList<Integer> quantity = new ArrayList<Integer>();
-		    for (String s : request.getParameterValues("quantity")) {
-		    	itemId.add(Integer.parseInt(s));
-		    }
-		    int transactionId = 0; //TODO figure out how to track this
-		    Sale sale = new Sale(acc.getName(), itemId, itemName, quantity, transactionId);
+		    
+		    String itemName = "temp";
+		    int transactionId = db.getAllSales().size();
+		    
+		    Sale sale = new Sale(account, itemIds, itemName, quantity, transactionId);
 		    session.setAttribute("sale", sale);
 		    
-		    String target = "CheckoutView.jsp";
+		    String target = "/jsp/CheckoutView.jsp";
 		    request.getRequestDispatcher(target).forward(request, response);
 		    
 		} else {
+
 			session.setAttribute("sendToCheckout", true);
-			String target = "LoginPage.jsp";
-		    request.getRequestDispatcher(target).forward(request, response);
+			String target = "/jsp/LoginPage.jsp";
+		  
+        request.getRequestDispatcher(target).forward(request, response);
 		}
 	}
 

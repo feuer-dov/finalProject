@@ -34,4 +34,5 @@ public interface DatabaseInterface {
 	Sale getSale(int transactionId);
 	boolean finalizeSale(Sale s);
 	List<Sale> getAllSales();
+	List<Item> getAllItemsPriceSorted();
 }

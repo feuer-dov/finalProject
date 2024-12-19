@@ -54,7 +54,7 @@ public class ShoppingCartServlet extends HttpServlet {
    	    
 		try {
 			String action = request.getParameter("action");
-			String itemIDString = request.getParameter("itemID");
+			String itemIDString = request.getParameter("itemId");
 			int itemID = Integer.parseInt(itemIDString);
 			
 	   	  
@@ -64,37 +64,24 @@ public class ShoppingCartServlet extends HttpServlet {
 				item.setQtyOrdered(qty);
 				cart.addItem(item);
 			}
-			if(action.equals("increase")) {
-				System.out.println("Increase quantity!!!!!");
-				// 1 item added to cart instance
+			if(action.equals("updateQty")) {
+				int qty = Integer.parseInt(request.getParameter("qty"));
+				cart.setItemQty(itemID, qty);
 			}
-			if(action.equals("decrease")) {
-				System.out.println("Decrease quantity!!!!!");
-				// 1 item removed from cart instance
-			}
+			
 			if(action.equals("remove")) {
 				System.out.println("Remove item!!!!!");
-				cart.removeItem(itemID);
 				// Entire item removed from cart instance
+				cart.removeItem(itemID);
 			}
 		}
 		catch(Exception e) {
-			
+			System.out.println("Exception caught in Shopping Cart");
 		}
 		
-		if(cart.getItems().size() == 0) {
-			response.setContentType("text/html;charset=UTF-8");
-	   	    PrintWriter out = response.getWriter();
-	   	    
-	   	    out.println("<h1>Cart is empty!</h1>");
-	   	    out.println("<br><a href=\"index.html\">Keep Shopping</a>");
-	   	    out.close();
-		}
-		else {
-			RequestDispatcher rd = request.getRequestDispatcher("/jsp/shoppingCartView.jsp");
-			rd.forward(request, response);
-		}
-		
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/shoppingCartView.jsp");
+		rd.forward(request, response);
+	
 	}
 
 	/**
