@@ -5,18 +5,53 @@
 <head>
 <meta charset="UTF-8">
 <title>Create an Account</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/login.css">
 </head>
+
 <body>
-	<h2>Create an Account</h2>
-	<form method='get' action='/final/CreateAccountServlet'>
-		<p>Name: <input type='text' name='name'></p>
-		<p>Username: <input type='text' name='username'></p>
-		<p>Password: <input type='password' name='password'></p>
-		<p>Credit Card Info: <input type='text' name='CC'></p>
-		<p>Shipping Address: <input type='text' name='ship'></p>
-		<p>Billing Address: <input type='text' name='billing'></p>
-		<input type='Submit' value='Create Account'>
-	</form>
+	<div class='outer-container'>
+		<jsp:include page="header.jsp" />
+		<div class='login-container'>
+			<h2>Create an Account</h2>
+			<form method="get" action="CreateAccountServlet">
+    <div class="input-field">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+    </div>
+
+    <div class="input-field">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+    </div>
+
+    <div class="input-field">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+    </div>
+
+    <div class="input-field">
+        <label for="CC">Credit Card Info:</label>
+        <input type="text" name="CC" id="CC" required>
+    </div>
+
+    <div class="input-field">
+        <label for="ship">Shipping Address:</label>
+        <input type="text" name="ship" id="ship" required>
+    </div>
+
+    <div class="input-field">
+        <label for="billing">Billing Address:</label>
+        <input type="text" name="billing" id="billing" required>
+    </div>
+
+    <div class="login-button">
+        <input type="submit" value="Create Account">
+    </div>
+</form>
+		</div>
+	</div>
 </body>
 </html>
 

@@ -63,7 +63,7 @@
 	        <div class="total-price">
 	            <p>Total Price: $<fmt:formatNumber value="${cart.total}" pattern="#0.00" /></p>
 	        </div>
-	         
+	        
 	    	<form action="CheckoutServlet" method="GET">
 	        	<input type="submit" value="Go to Checkout" />
 	    	</form>

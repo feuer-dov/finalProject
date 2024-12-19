@@ -47,10 +47,12 @@
 	            <div class="login-button">
 	                <input type="submit" value="Login">
 	            </div>
+	            
 	        </form>
 	
 	        <p class="create-account">
-	            Don't have an account? <a href="jsp/register.jsp">Create one</a>
+	            Don't have an account? 
+	            <a href="RegisterUser">Create one</a>
 	        </p>
 	    </div>
     </div>
