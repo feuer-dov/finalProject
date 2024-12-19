@@ -38,13 +38,19 @@ public class CheckoutServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	    HttpSession session = request.getSession(true);
 	    String account = "" + request.getAttribute("account");
-		if (!(account == null == account.equals(""))) {
+	    boolean displayCreditFail = false;
+	    session.setAttribute("displayCreditFail", displayCreditFail);
+	    
+	    if (!(account == null || account.equals(""))) {
+	    	
 			Database db = new Database(request.getServletContext());
-			Account acc = db.getAccount("test");
+			Account acc = db.getAccount(account);
 			String billing = acc.getBillingAddress();
 		    session.setAttribute("def_billing", billing);
 		    String shipping = acc.getShipAddress();
 		    session.setAttribute("def_shipping", shipping);
+		    String creditCard = acc.getCreditCard();
+		    session.setAttribute("def_creditCard", creditCard);
 		    
 //old code from based on shoppingCartView.jsp, will delete later
 //		    String itemName = request.getParameter("itemName");
@@ -78,8 +84,11 @@ public class CheckoutServlet extends HttpServlet {
 		    request.getRequestDispatcher(target).forward(request, response);
 		    
 		} else {
+
+			session.setAttribute("sendToCheckout", true);
 			String target = "/jsp/LoginPage.jsp";
-		    request.getRequestDispatcher(target).forward(request, response);
+		  
+        request.getRequestDispatcher(target).forward(request, response);
 		}
 	}
 

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Account;
 import controller.Database;
@@ -49,8 +50,17 @@ public class AttemptLogin extends HttpServlet {
 				
 				System.out.println("Sending to Admin Page");
 			}else {
+			    HttpSession session = request.getSession(true);
+				boolean checkout = (boolean) session.getAttribute("sendToCheckout");
+				session.setAttribute("sendToCheckout", false);
+				
+				if(checkout) {
+					dispatch = request.getRequestDispatcher("CheckoutView.jsp"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO CHECKOUT
+					System.out.println("Sending to Checkout");
+				} else {
 				dispatch = request.getRequestDispatcher("MainMenu.jsp"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO MAINMENU
 				System.out.println("Sending to Main Page");
+				}
 			}
 				dispatch.include(request, response);
 		}else {
