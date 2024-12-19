@@ -44,8 +44,8 @@
             <td colspan="3" style="text-align:right;"><strong>Total</strong></td>
             <td><strong>$<%= String.format("%.2f", total) %></strong></td>
         </tr>
-    </table>
-    <a href="catalog?action=list">Continue Shopping</a>
-<%
+	<table>
+    <a href="/final/catalog?action=list">Continue Shopping</a>
+	<%
     }
-%>
+	%>
