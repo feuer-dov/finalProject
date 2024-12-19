@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+.sidebar {
+	width: 250px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 20px;
+	height: fit-content;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h3 {
+	margin-bottom: 15px;
+	color: var(--color-primary);
+}
+
+.sidebar form {
+	margin-bottom: 20px;
+}
+
+.sidebar form label {
+	display: block;
+	margin-bottom: 5px;
+	color: var(--color-text);
+}
+
+.sidebar form select, .sidebar form button {
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.sidebar form input {
+	background-color: white;
+	color: var(--color-text);
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.sidebar form input:hover {
+	text-decoration: underline; /* Underline text on hover */
+}

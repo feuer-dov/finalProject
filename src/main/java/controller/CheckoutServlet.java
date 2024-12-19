@@ -74,11 +74,11 @@ public class CheckoutServlet extends HttpServlet {
 		    Sale sale = new Sale(account, itemIds, itemName, quantity, transactionId);
 		    session.setAttribute("sale", sale);
 		    
-		    String target = "CheckoutView.jsp";
+		    String target = "/jsp/CheckoutView.jsp";
 		    request.getRequestDispatcher(target).forward(request, response);
 		    
 		} else {
-			String target = "LoginPage.jsp";
+			String target = "/jsp/LoginPage.jsp";
 		    request.getRequestDispatcher(target).forward(request, response);
 		}
 	}

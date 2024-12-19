@@ -6,11 +6,11 @@ public class Item {
 	private String description;
 	private String category_Name;
 	private String brand;
-	private int price;
+	private double price;
 	private int stock;
 	private int qtyOrdered;
 	
-	public Item(String n, int i, String d, String c, String b, int p, int s) {
+	public Item(String n, int i, String d, String c, String b, double p, int s) {
 		this.name = n;
 		this.id = i;
 		this.description = d;
@@ -21,7 +21,7 @@ public class Item {
 	}
 	
 	//For Creating an Item once someone has ordered it (With qty ordered)
-	public Item(String n, int i, String d, String c, String b, int p, int s, int qtyOrdered) {
+	public Item(String n, int i, String d, String c, String b, double p, int s, int qtyOrdered) {
 		this.name = n;
 		this.id = i;
 		this.description = d;
@@ -65,7 +65,7 @@ public class Item {
 		return this.brand;
 	}
 	
-	public int getPrice() {
+	public double getPrice() {
 		return this.price;
 	}
 	
@@ -93,7 +93,7 @@ public class Item {
 		this.brand = br;
 	}
 	
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	
