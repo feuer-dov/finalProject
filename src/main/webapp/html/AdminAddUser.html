@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h2>Create New User Account</h2>
-	<form method='get' action='ViewUsers'>
+	<form method='get' action='/final/ViewUsers'>
 		<p>Name: <input type='text' name='newName'></p>
 		<p>Username: <input type='text' name='newUsername'></p>
 		<p>Password: <input type='text' name='newPassword'></p>
@@ -19,6 +19,7 @@
 		</select></p>
 		<input type='hidden' name='addUser' value='1'>
 		<input type='hidden' name='remove' value='0'>
+		<input type='hidden' name='eFlag' value='0'>
 		<input type='submit' value='Add New User'>
 	</form>
 </body>

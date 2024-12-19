@@ -58,7 +58,7 @@
 				</form>
 			</td>
 			<td>
-				<form method='get' action='LoginPage.jsp'>
+				<form method='get' action='home'>
 					<input type='submit' value='Logout'>
 				</form>
 		</tr>

@@ -40,6 +40,8 @@ public class EditUser extends HttpServlet {
 		
 		request.setAttribute("userAccount", account);
 		
+		request.setAttribute("eFlag", 0);
+		
 		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/EditUser.jsp");
 		dispatch.include(request, response);
 		

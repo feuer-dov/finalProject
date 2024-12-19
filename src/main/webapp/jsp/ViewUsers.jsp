@@ -45,13 +45,14 @@
 						<input type='hidden' name='addUser' value='0'>
 						<input type='hidden' name='rUsername' value="${a.username}">
 						<input type='hidden' name='username' value="${param.username }">
+						<input type='hidden' name='eFlag' value="0">
 						<input type='submit' value='Remove Account'>
 					</form>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
-	<form method='get' action='AdminAddUser.html'>
+	<form method='get' action='html/AdminAddUser.html'>
 		<input type='hidden' name='username' value='${username }'>
 		<input type='submit' value='Create New Account'>
 	</form>

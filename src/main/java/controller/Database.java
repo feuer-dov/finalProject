@@ -772,7 +772,7 @@ public class Database implements DatabaseInterface{
 					
 					try {
 						byte[] dataId = r.getBytes(2);
-						byte[] dataQty = r.getBytes(4);
+						byte[] dataQty = r.getBytes(3);
 						
 						ByteArrayInputStream inputStream1 = new ByteArrayInputStream(dataId);
 						ByteArrayInputStream inputStream2 = new ByteArrayInputStream(dataQty);
@@ -781,7 +781,7 @@ public class Database implements DatabaseInterface{
 						ObjectInputStream objectStream2 = new ObjectInputStream(inputStream2);
 						itemIds = (ArrayList<Integer>) objectStream1.readObject();
 						itemQtys = (ArrayList<Integer>) objectStream2.readObject();
-						sale = new Sale(r.getString(1), itemIds, r.getString(3), itemQtys, r.getInt(5));
+						sale = new Sale(r.getString(1), r.getDouble(5), itemIds, itemQtys, r.getInt(4));
 						break;
 					}catch(Exception e) {
 						e.printStackTrace();
@@ -816,7 +816,7 @@ public class Database implements DatabaseInterface{
 	public boolean finalizeSale(Sale s) {
 		Connection con = null;
 		PreparedStatement statement = null;
-		String sql = "INSERT INTO PURCHASE_HISTORY(Cust_Username, Item_Id, Item_Name, Quantity, Transaction_Id) VALUES (?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO PURCHASE_HISTORY(Cust_Username, Item_Id, Quantity, Transaction_Id, Total) VALUES (?, ?, ?, ?, ?);";
 		
 		try {
 			con = getConnection();
@@ -838,9 +838,9 @@ public class Database implements DatabaseInterface{
 				qtyData = qtyByte.toByteArray();
 				
 				statement.setObject(2, idData);
-				statement.setString(3, s.getItemName());
-				statement.setObject(4, qtyData);
-				statement.setInt(5, s.getTransactionId());
+				statement.setObject(3, qtyData);
+				statement.setInt(4, s.getTransactionId());
+				statement.setDouble(5, s.getTotal());
 				
 				statement.executeUpdate();
 			} catch (Exception e) {
@@ -881,7 +881,7 @@ public class Database implements DatabaseInterface{
 				
 				try {
 					byte[] itemData = r.getBytes(2);
-					byte[] qtyData = r.getBytes(4);
+					byte[] qtyData = r.getBytes(3);
 					
 					ByteArrayInputStream inputStream1 = new ByteArrayInputStream (itemData);
 					ByteArrayInputStream inputStream2 = new ByteArrayInputStream (qtyData);
@@ -892,7 +892,7 @@ public class Database implements DatabaseInterface{
 					ArrayList<Integer> itemIds = (ArrayList<Integer>) objectStream1.readObject();
 					ArrayList<Integer> itemQtys = (ArrayList<Integer>) objectStream2.readObject();
 					
-					sale = new Sale(r.getString(1), itemIds, r.getString(3), itemQtys, r.getInt(5));
+					sale = new Sale(r.getString(1), r.getDouble(5), itemIds, itemQtys, r.getInt(4));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -915,5 +915,53 @@ public class Database implements DatabaseInterface{
 		}
 		
 		return sales;
+	}
+	
+	public List<Sale> getAllSalesByUsername(String username){
+		Connection con = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM PURCHASE_HISTORY;";
+		
+		List<Sale> result = new ArrayList<>();
+		
+		try {
+			con = getConnection();
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getString(1).equals(username)){
+					byte[] itemData = rs.getBytes(2);
+					byte[] qtyData = rs.getBytes(3);
+					
+					ByteArrayInputStream inputStream1 = new ByteArrayInputStream (itemData);
+					ByteArrayInputStream inputStream2 = new ByteArrayInputStream (qtyData);
+					
+					ObjectInputStream objectStream1 = new ObjectInputStream(inputStream1);
+					ObjectInputStream objectStream2 = new ObjectInputStream(inputStream2);
+					
+					ArrayList<Integer> itemIds = (ArrayList<Integer>) objectStream1.readObject();
+					ArrayList<Integer> itemQtys = (ArrayList<Integer>) objectStream2.readObject();
+					
+					Sale sale = new Sale(rs.getString(1), rs.getDouble(5), itemIds, itemQtys, rs.getInt(4));
+					result.add(sale);
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			closeConnection(con);
+		}
+		
+		return result;
 	}
 }

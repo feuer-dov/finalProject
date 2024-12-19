@@ -5,26 +5,25 @@ import java.util.ArrayList;
 
 public class Sale implements Serializable{
 	private String custName;
-	private String itemName;
 	private ArrayList<Integer> itemId;
 	private ArrayList<Integer> quantity;
 	private int transactionId;
+	private double total;
 	
-	public Sale(String cname, ArrayList<Integer> id, String iname, ArrayList<Integer> qty, int tId) {
+	public Sale(String cname, double total, ArrayList<Integer> id, ArrayList<Integer> qty, int tId) {
 		this.custName = cname;
 		this.itemId = id;
 		this.quantity = qty;
 		this.transactionId = tId;
-		this.itemName = iname;
+		this.total = total;
 	}
+	
+	
 	
 	public String getCustName() {
 		return this.custName;
 	}
 	
-	public String getItemName() {
-		return this.itemName;
-	}
 	
 	public ArrayList<Integer> getItemId() {
 		return this.itemId;
@@ -37,4 +36,16 @@ public class Sale implements Serializable{
 	public int getTransactionId() {
 		return this.transactionId;
 	}
+
+
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	
+	
 }

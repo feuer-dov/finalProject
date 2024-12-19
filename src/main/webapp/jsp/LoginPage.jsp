@@ -23,11 +23,11 @@
 			</c:otherwise>
 		</c:choose>
 		<h2>Login:</h2>
-		<form method='get' action='AttemptLogin'>
-			<p>Username: <input tpye='text' name='username'></p>
-			<p>Password: <input type='text' name='password'></p>
+		<form method='get' action='/final/AttemptLogin'>
+			<p>Username: <input type='text' name='username'></p>
+			<p>Password: <input type='password' name='password'></p>
 			<input type='submit' value='Login'>
 		</form>
-		<a href='Register.html'>Create an Account</a>
+		<a href='/final/jsp/register.jsp'>Create an Account</a>
 	</body>
 </html>

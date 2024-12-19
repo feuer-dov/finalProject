@@ -35,4 +35,6 @@ public interface DatabaseInterface {
 	boolean finalizeSale(Sale s);
 	List<Sale> getAllSales();
 	List<Item> getAllItemsPriceSorted();
+	List<Sale> getAllSalesByUsername(String username);
+	
 }
