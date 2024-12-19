@@ -47,6 +47,7 @@ public class HomePageServlet extends HttpServlet {
 		String category = request.getParameter("category");
 		String brand = request.getParameter("brand");
 		String byPrice = request.getParameter("byPrice");
+		String searchQuery = request.getParameter("searchQuery");
 		
 		List<Item> itemsToDisplay;
 		
@@ -58,6 +59,9 @@ public class HomePageServlet extends HttpServlet {
 		}
 		else if(byPrice != null) {
 			itemsToDisplay = db.getAllItemsPriceSorted();
+		}
+		else if(searchQuery != null) {
+			itemsToDisplay = db.getItemsBySearchQuery(searchQuery);
 		}
 		else {
 			itemsToDisplay = db.getAllItems();

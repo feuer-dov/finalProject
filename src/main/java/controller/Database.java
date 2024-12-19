@@ -16,6 +16,7 @@ import javax.servlet.ServletContext;
 
 import model.Account;
 import model.Item;
+import model.Product;
 import model.Sale;
 
 public class Database implements DatabaseInterface{
@@ -964,4 +965,33 @@ public class Database implements DatabaseInterface{
 		
 		return result;
 	}
+	
+	public List<Item> getItemsBySearchQuery(String query){
+		Connection con = null;
+		PreparedStatement stmt = null;
+		List<Item> result = new ArrayList<Item>();
+		
+		String sql = "SELECT DISTINCT * FROM ITEMS WHERE Name LIKE ? OR Brand LIKE ? OR Category_Name LIKE ? OR Description LIKE ?";
+        try {
+        	con = getConnection();
+        	stmt = con.prepareStatement(sql);
+        	String searchTerm = "%" + query + "%";
+        	
+        	for (int i = 1; i <= 4; i++) {
+        	    stmt.setString(i, searchTerm);
+        	}
+            
+            ResultSet r = stmt.executeQuery();
+            while (r.next()) {
+            	Item i = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getDouble(6), r.getInt(7));
+				result.add(i);
+               }
+            }catch (Exception e) {
+            e.printStackTrace();
+            result = null;
+        }
+        
+        return result;
+	}
+
 }
