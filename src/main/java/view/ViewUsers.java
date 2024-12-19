@@ -34,7 +34,7 @@ public class ViewUsers extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Database db = new Database(request.getServletContext());
-		
+				
 		if(request.getParameter("remove").equals("1")) {
 			String rUsername = request.getParameter("rUsername");
 			db.deleteAccount(rUsername);

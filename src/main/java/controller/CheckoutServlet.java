@@ -37,14 +37,14 @@ public class CheckoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	    HttpSession session = request.getSession(true);
-	    String account = "" + request.getAttribute("account");
+	    Account acc = (Account) session.getAttribute("account");
+	    
 	    boolean displayCreditFail = false;
 	    session.setAttribute("displayCreditFail", displayCreditFail);
 	    
-	    if (!(account == null || account.equals(""))) {
+	    if (acc != null) {
 	    	
 			Database db = new Database(request.getServletContext());
-			Account acc = db.getAccount(account);
 			String billing = acc.getBillingAddress();
 		    session.setAttribute("def_billing", billing);
 		    String shipping = acc.getShipAddress();
@@ -52,19 +52,6 @@ public class CheckoutServlet extends HttpServlet {
 		    String creditCard = acc.getCreditCard();
 		    session.setAttribute("def_creditCard", creditCard);
 		    
-//old code from based on shoppingCartView.jsp, will delete later
-//		    String itemName = request.getParameter("itemName");
-//		    ArrayList<Integer> itemId = new ArrayList<Integer>();
-//		    for (String s : request.getParameterValues("itemId")) {
-//		    	itemId.add(Integer.parseInt(s));
-//		    }
-//		    ArrayList<Integer> quantity = new ArrayList<Integer>();
-//		    for (String s : request.getParameterValues("quantity")) {
-//		    	itemId.add(Integer.parseInt(s));
-//		    }
-//		    int transactionId = 0; //TODO figure out how to track this
-//		    Sale sale = new Sale(acc.getName(), itemId, itemName, quantity, transactionId);
-//		    session.setAttribute("sale", sale);
 		    
 		    Cart cart = (Cart) session.getAttribute("cart");
 		    ArrayList<Integer> itemIds = new ArrayList<>();
@@ -74,10 +61,10 @@ public class CheckoutServlet extends HttpServlet {
 		    	quantity.add(item.getQtyOrdered());
 		    }
 		    
-		    String itemName = "temp";
 		    int transactionId = db.getAllSales().size();
+		    double total = cart.getTotal();
 		    
-		    Sale sale = new Sale(account, itemIds, itemName, quantity, transactionId);
+		    Sale sale = new Sale(acc.getUsername(), total, itemIds, quantity, transactionId);
 		    session.setAttribute("sale", sale);
 		    
 		    String target = "/jsp/CheckoutView.jsp";

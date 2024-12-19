@@ -14,7 +14,7 @@
 		<input type='submit' value='View Cart' />
 		<input type='hidden' name='action' value='view' />
 	</form>
-	<form action='ShoppingCart' method='get'>
+	<form action='jsp/LoginPage.jsp' method='get'>
 		<input type='submit' value='Log In' />
 	</form>
 	

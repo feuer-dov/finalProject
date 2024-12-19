@@ -34,7 +34,8 @@ public class AttemptLogin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Database db = new Database(request.getServletContext());
-		
+	    HttpSession session = request.getSession(true);
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
@@ -42,7 +43,8 @@ public class AttemptLogin extends HttpServlet {
 		
 		if(req) {
 			Account user = db.getAccount(username);
-			request.setAttribute("account", username);
+			session.setAttribute("account", user);
+			
 			RequestDispatcher dispatch = null;
 			System.out.println(user.getPriv());
 			if(user.getPriv() == 2) {
@@ -50,19 +52,19 @@ public class AttemptLogin extends HttpServlet {
 				
 				System.out.println("Sending to Admin Page");
 			}else {
-			    HttpSession session = request.getSession(true);
 				boolean checkout = (boolean) session.getAttribute("sendToCheckout");
 				session.setAttribute("sendToCheckout", false);
 				
+	
 				if(checkout) {
-					dispatch = request.getRequestDispatcher("CheckoutView.jsp"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO CHECKOUT
+					dispatch = request.getRequestDispatcher("/jsp/CheckoutView.jsp"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO CHECKOUT
 					System.out.println("Sending to Checkout");
 				} else {
-				dispatch = request.getRequestDispatcher("MainMenu.jsp"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO MAINMENU
-				System.out.println("Sending to Main Page");
+				dispatch = request.getRequestDispatcher("/home"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO MAINMENU
+					System.out.println("Sending to Main Page");
 				}
 			}
-				dispatch.include(request, response);
+				dispatch.forward(request, response);
 		}else {
 			RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/LoginPage.jsp");
 			System.out.println("LOGIN ERROR");
