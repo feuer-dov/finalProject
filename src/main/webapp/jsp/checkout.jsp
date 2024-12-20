@@ -17,7 +17,14 @@
 	<div class="outer-container">
 		<jsp:include page="header.jsp" />
 		<div class='login-container'>
-			<h2>Checkout</h2>
+		<c:choose>
+			<c:when test="${requestScope.cardFailed == 1}">
+				<p>Credit Card Authorization Failed, Please Try Again</p>
+			</c:when>
+			<c:otherwise>
+				<p>Checkout</p>
+			</c:otherwise>
+		</c:choose>
 
 			<p>
 				Total Price: $<fmt:formatNumber value="${cart.total}" pattern="#0.00" />
