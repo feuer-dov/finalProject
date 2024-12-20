@@ -33,7 +33,7 @@
 	        </c:choose>
 	
 	        <h2>Login:</h2>
-	        <form method="get" action="AttemptLogin">
+	        <form method="post" action="AttemptLogin">
 	            <div class="input-field">
 	                <label for="username">Username:</label>
 	                <input type="text" name="username" id="username" required>

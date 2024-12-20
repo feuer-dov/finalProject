@@ -32,7 +32,7 @@
 	                
 	
 	                <!-- Add to Cart Form -->
-	                <form action="ShoppingCart" method="get">
+	                <form action="ShoppingCart" method="post">
 	                    <label for="quantity">Quantity:</label>
 	                    <select name="qty" id="quantity">
 	                        <c:forEach var="i" begin="1" end="${item.stock}">

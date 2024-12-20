@@ -4,7 +4,7 @@
 
 <div class='header-container'>
 
-	<form action='home' method='get' class='logo-container'>
+	<form action='home' method='post' class='logo-container'>
 		<input type='image' src="images/amaze-on-logo.png" alt="Amaze On" />
 	</form>
 	<div class='search-container'>

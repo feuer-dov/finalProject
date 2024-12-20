@@ -57,19 +57,7 @@ public class CheckoutServlet extends HttpServlet {
 				request.getRequestDispatcher(target).forward(request, response);
 		    }
 		    
-		    ArrayList<Integer> itemIds = new ArrayList<>();
-		    ArrayList<Integer> quantity = new ArrayList<>();
-		    for (Item item : cart.getItems()) {
-		    	itemIds.add(item.getId());
-		    	quantity.add(item.getQtyOrdered());
-		    }
-		    
-		    int transactionId = db.getAllSales().size();
-		    double total = cart.getTotal();
-		    
-		    Sale sale = new Sale(acc.getUsername(), total, itemIds, quantity, transactionId, shipping, creditCard);
-		    session.setAttribute("sale", sale);
-		    
+		
 		    String target = "/jsp/checkout.jsp";
 		    request.getRequestDispatcher(target).forward(request, response);
 		    

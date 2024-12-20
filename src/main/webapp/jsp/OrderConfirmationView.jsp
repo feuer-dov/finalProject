@@ -1,17 +1,27 @@
 <%@ page language="java" contentType='text/html; charset=UTF-8' pageEncoding="UTF-8"%>
 <html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+
 	<head>
 		<title>Order Confirmation Page</title>
-		<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/header.css">
+		<link rel="stylesheet" href="css/order-confirmation.css">
 	</head>
 	<body>
-		<h1>Thank you for Orderings. </h1>
+	<div class='outer-container' >
+		<jsp:include page="header.jsp" />
+		<div class='summary-display'>
+			<h1>Thank you for ordering. </h1>
+			<p>Billing: <b>${param.billingAddress } </b> </p>
+			<p>Shipping: <b>${param.shippingAddress } </b>  </p>
+			<p>Credit Card: <b>${param.creditCardNumber } </b> </p>
+			<p>Total: <b>$<fmt:formatNumber value="${total}" pattern="#0.00" /></b>  </p>
+	
+			<p><a href='home'>Back to Shopping</a></p>
+		</div>
+	</div>
 		
-		<p>Billing: <b>${param.billing } </b> </p>
-		<p>Shipping: <b>${param.shipping } </b>  </p>
-		<p>Credit Card: <b>${param.card } </b> </p>
-		<p>Total: <b>${param.total }</b>  </p>
-
-		<p><a href='home'>Back to Shopping</a></p>
 	</body>
 </html>

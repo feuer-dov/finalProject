@@ -15,7 +15,7 @@
 <body>
 	<div class="outer-container">
 		<jsp:include page="header.jsp" />
-		<form action="AccountInfo" method="get">
+		<form action="AccountInfo" method="post">
 			
 			<div class="account-container">
 				<p>Username: ${account.username }<p>
