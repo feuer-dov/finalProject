@@ -1,8 +1,6 @@
-package view;
+package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,20 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Sale;
-import controller.Database;
-
 /**
- * Servlet implementation class SalesHistory
+ * Servlet implementation class CreateAccountServlet
  */
-@WebServlet("/SalesHistory")
-public class SalesHistory extends HttpServlet {
+@WebServlet("/CreateAccountServlet")
+public class CreateAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SalesHistory() {
+    public CreateAccountServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,21 +28,27 @@ public class SalesHistory extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		Database db = new Database(request.getServletContext());
-		List<Sale> sales = db.getAllSales();
+		String name = request.getParameter("name");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String cc = request.getParameter("CC");
+		String shippingAddress = request.getParameter("ship");
+		String billing = request.getParameter("billing");
 		
-		if(request.getParameter("filterName") != null && !request.getParameter("filterName").isEmpty()) {
-			String username = (String) request.getAttribute("filterName");
-			sales = db.getAllSalesByUsername(username);
-			System.out.println("Filtering Sale");
+		System.out.println("TEST1");
+		int error = db.createAccount(username, password, shippingAddress, cc, name, billing);
+		System.out.println("Test2");
+		if(error == 2) {
+			request.setAttribute("returnValue", "2");
+		}else if(error == 3) {
+			request.setAttribute("returnValue", "3");
+		}else {
+			request.setAttribute("returnValue", "1");
 		}
-		
-		request.setAttribute("sales", sales);
-		
-		
-		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/SalesHistory.jsp");
-		dispatch.include(request, response);
+		System.out.println(request.getAttribute("returnValue"));
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/LoginPage.jsp");
+		dispatch.forward(request, response);
 	}
 
 	/**
