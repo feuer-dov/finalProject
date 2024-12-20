@@ -39,9 +39,6 @@ public class CheckoutServlet extends HttpServlet {
 	    HttpSession session = request.getSession(true);
 	    Account acc = (Account) session.getAttribute("account");
 	    
-	    boolean displayCreditFail = false;
-	    session.setAttribute("displayCreditFail", displayCreditFail);
-	    
 	    if (acc != null) {
 	    	
 			Database db = new Database(request.getServletContext());
@@ -54,6 +51,13 @@ public class CheckoutServlet extends HttpServlet {
 		    
 		    
 		    Cart cart = (Cart) session.getAttribute("cart");
+		    if (cart == null || cart.isEmpty()) {
+		    	session.setAttribute("emptyCart", true);
+				String target = "/final/ShoppingCart";
+			  
+				request.getRequestDispatcher(target).forward(request, response);
+		    }
+		    
 		    ArrayList<Integer> itemIds = new ArrayList<>();
 		    ArrayList<Integer> quantity = new ArrayList<>();
 		    for (Item item : cart.getItems()) {
@@ -64,7 +68,7 @@ public class CheckoutServlet extends HttpServlet {
 		    int transactionId = db.getAllSales().size();
 		    double total = cart.getTotal();
 		    
-		    Sale sale = new Sale(acc.getUsername(), total, itemIds, quantity, transactionId);
+		    Sale sale = new Sale(acc.getUsername(), total, itemIds, quantity, transactionId, shipping, creditCard);
 		    session.setAttribute("sale", sale);
 		    
 		    String target = "/jsp/checkout.jsp";
@@ -75,7 +79,7 @@ public class CheckoutServlet extends HttpServlet {
 			session.setAttribute("sendToCheckout", true);
 			String target = "/jsp/LoginPage.jsp";
 		  
-        request.getRequestDispatcher(target).forward(request, response);
+			request.getRequestDispatcher(target).forward(request, response);
 		}
 	}
 
