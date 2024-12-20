@@ -20,8 +20,9 @@
 		</form>
 		<c:choose>
 			<c:when test="${account != null }">
-				<form action='TempLogin' method='get'>
+				<form action='AccountInfo' method='get'>
 					<input type='submit' value='Account Info' />
+					<input type='hidden' name='action' value='view' />
 				</form>
 			</c:when>
 			<c:otherwise>
