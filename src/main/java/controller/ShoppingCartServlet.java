@@ -79,6 +79,7 @@ public class ShoppingCartServlet extends HttpServlet {
 			System.out.println("Exception caught in Shopping Cart");
 		}
 		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/shoppingCartView.jsp");
 		rd.forward(request, response);
 	

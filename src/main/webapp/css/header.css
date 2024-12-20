@@ -5,8 +5,9 @@
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+	max-width: 100%;
 	padding: 10px 20px;
-	background-color: #3498db;
+	background-color: var(--color-grey);
 	color: white;    
 }
 
@@ -16,3 +17,50 @@
     border: none;
     cursor: pointer;
 }
+
+.header-container form input[type="submit"] {
+    background-color: var(--color-secondary);
+    color: white;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: auto;
+    margin: 5px;
+}
+
+
+.header-container input[type="text"] {
+    width: 60%;  
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.header-container .search-container form{
+    width: 100%;
+    display: flex;              
+    justify-content: center;     
+    align-items: center;       
+    gap: 10px
+     
+} 
+
+.header-container .search-container {
+    display: flex;
+    flex: 1;  
+    justify-content: center; 
+}
+
+
+.header-container .right-buttons {
+    flex: 0 1 auto;  
+    display: flex;
+    gap: 15px;  
+}
+

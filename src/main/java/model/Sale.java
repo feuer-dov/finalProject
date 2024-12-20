@@ -19,7 +19,6 @@ public class Sale implements Serializable{
 	}
 	
 	
-	
 	public String getCustName() {
 		return this.custName;
 	}

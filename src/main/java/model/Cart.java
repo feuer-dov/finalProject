@@ -116,6 +116,10 @@ public class Cart {
 		
 	}
 	
+	public void clearCart() {
+		cart = new ArrayList<Item>();
+	}
+	
 	private Item getItemById(int id){
 		Item result = null;
 		
@@ -128,6 +132,8 @@ public class Cart {
 		
 		return result;
 	}
+	
+
 
 }
 //

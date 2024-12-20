@@ -1,10 +1,11 @@
 @charset "UTF-8";
 
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
+/* Basic Reset */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 h1 {
@@ -20,6 +21,7 @@ h1 {
     padding: 20px;
     margin-bottom: 15px;
     background-color: #fff;
+    width: 100%;
 }
 
 .item-image img {

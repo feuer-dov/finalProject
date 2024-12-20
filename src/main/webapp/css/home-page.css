@@ -17,12 +17,12 @@
 
 /* Grid Container */
 .item-grid {
-    display: grid;                             /* Enable grid layout for items */
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Each item will be at least 250px wide */
-    grid-template-rows: auto;                  /* Let the rows automatically adjust based on content */
-    gap: 20px;                                 /* Space between grid items */
-    height: 100%;                               /* Ensure the grid takes the full height of the container */
-    width: 100%;                                /* Ensure the grid stretches across the available width */
+    display: grid;                            
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    grid-template-rows: auto;                  
+    gap: 20px;                                 
+    height: 100%;                              
+    width: 100%;                                
 }
 
 /* Individual Item Box */

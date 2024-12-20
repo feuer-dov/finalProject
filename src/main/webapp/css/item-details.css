@@ -1,3 +1,11 @@
+/* Basic Reset */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+
 /* Container for the page layout */
 .container {
     display: flex;
@@ -9,8 +17,9 @@
 .item-details {
     display: flex;
     gap: 20px;
-    flex-wrap: wrap;  /* Allows wrapping on smaller screens */
+    flex-wrap: wrap; 
     align-items: flex-start;
+    width: 100%;
 }
 
 /* Image Styling */

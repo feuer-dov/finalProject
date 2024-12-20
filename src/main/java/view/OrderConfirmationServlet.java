@@ -66,6 +66,8 @@ public class OrderConfirmationServlet extends HttpServlet {
 		out.println("</body></html>");
 		
 		
+		
+		
 	}
 
 	/**
