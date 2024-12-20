@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import model.Account;
 import model.Cart;
 import model.Item;
 import model.Sale;
-import controller.Database;
 
 /**
  * Servlet implementation class OrderConfirmation

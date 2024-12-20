@@ -1,8 +1,6 @@
-package view;
+package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Sale;
-import controller.Database;
+import model.Account;
 
 /**
- * Servlet implementation class SalesHistory
+ * Servlet implementation class EditUser
  */
-@WebServlet("/SalesHistory")
-public class SalesHistory extends HttpServlet {
+@WebServlet("/EditUser")
+public class EditUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SalesHistory() {
+    public EditUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,20 +31,19 @@ public class SalesHistory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
 		Database db = new Database(request.getServletContext());
-		List<Sale> sales = db.getAllSales();
+		String user = request.getParameter("eUser");
 		
-		if(request.getParameter("filterName") != null && !request.getParameter("filterName").isEmpty()) {
-			String username = (String) request.getAttribute("filterName");
-			sales = db.getAllSalesByUsername(username);
-			System.out.println("Filtering Sale");
-		}
+		Account account = db.getAccount(user);
 		
-		request.setAttribute("sales", sales);
+		request.setAttribute("userAccount", account);
 		
+		request.setAttribute("eFlag", 0);
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/SalesHistory.jsp");
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/EditUser.jsp");
 		dispatch.include(request, response);
+		
 	}
 
 	/**

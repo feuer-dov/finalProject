@@ -1,6 +1,7 @@
-package view;
+package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,19 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.Database;
+import model.Account;
+import model.Item;
 
 /**
- * Servlet implementation class CreateAccountServlet
+ * Servlet implementation class AdminView
  */
-@WebServlet("/CreateAccountServlet")
-public class CreateAccountServlet extends HttpServlet {
+@WebServlet("/AdminView")
+public class AdminView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateAccountServlet() {
+    public AdminView() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,27 +32,22 @@ public class CreateAccountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Database db = new Database(request.getServletContext());
-		String name = request.getParameter("name");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String cc = request.getParameter("CC");
-		String shippingAddress = request.getParameter("ship");
-		String billing = request.getParameter("billing");
 		
-		System.out.println("TEST1");
-		int error = db.createAccount(username, password, shippingAddress, cc, name, billing);
-		System.out.println("Test2");
-		if(error == 2) {
-			request.setAttribute("returnValue", "2");
-		}else if(error == 3) {
-			request.setAttribute("returnValue", "3");
+		Database db = new Database(request.getServletContext());
+		Account user = db.getAccount((String) request.getAttribute("account"));
+		
+		if(user == null) {
+			user = db.getAccount(request.getParameter("username"));
+			request.setAttribute("username", request.getParameter("username"));
 		}else {
-			request.setAttribute("returnValue", "1");
+			request.setAttribute("username", user.getUsername());
 		}
-		System.out.println(request.getAttribute("returnValue"));
-		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/LoginPage.jsp");
-		dispatch.forward(request, response);
+		
+		List<Item> items = db.getAllItems();
+		request.setAttribute("items", items);
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/AdminView.jsp");
+		dispatch.include(request, response);
 	}
 
 	/**

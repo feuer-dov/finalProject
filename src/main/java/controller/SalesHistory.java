@@ -1,6 +1,7 @@
-package view;
+package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,20 +11,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Item;
-import controller.Database;
+import model.Sale;
 
 /**
- * Servlet implementation class InventoryManagement
+ * Servlet implementation class SalesHistory
  */
-@WebServlet("/InventoryManagement")
-public class InventoryManagement extends HttpServlet {
+@WebServlet("/SalesHistory")
+public class SalesHistory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InventoryManagement() {
+    public SalesHistory() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,29 +34,19 @@ public class InventoryManagement extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Database db = new Database(request.getServletContext());
+		List<Sale> sales = db.getAllSales();
 		
-	
-		request.setAttribute("username", request.getAttribute("username"));
-		
-		
-		
-		//Need to update Item Stock
-		if(request.getParameter("update") == null) {
-			//DO NOTHING
-		}else if(request.getParameter("update").equals("1")) {
-			int newId = Integer.parseInt(request.getParameter("newId"));
-			int newStock = Integer.parseInt(request.getParameter("newStock"));
-			
-			db.updateItemQty(newId, newStock);
-			
+		if(request.getParameter("filterName") != null && !request.getParameter("filterName").isEmpty()) {
+			String username = (String) request.getAttribute("filterName");
+			sales = db.getAllSalesByUsername(username);
+			System.out.println("Filtering Sale");
 		}
 		
-		List<Item> items = db.getAllItems();
-		request.setAttribute("Items", items);
+		request.setAttribute("sales", sales);
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/InventoryManagement.jsp");
+		
+		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/SalesHistory.jsp");
 		dispatch.include(request, response);
-		
 	}
 
 	/**
