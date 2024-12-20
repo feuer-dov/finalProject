@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+/* Reset default styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Outer container */
+.outer-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+/* Account info container */
+.account-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.account-container p {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.account-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.account-container input[type="text"]:focus {
+    border-color: #3498db;
+}
+
+.account-container input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.account-container input[type="number"]:focus {
+    border-color: #3498db;
+}
+
+.update-button input[type="submit"],
+.logout-button input[type="submit"] {
+    background-color: var(--color-secondary);  /* Blue color for Update */
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: auto;
+    margin-top: 20px;
+}
+
+.update-button input[type="submit"]:hover,
+.logout-button input[type="submit"]:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* For the Logout button, customize the color */
+.logout-button input[type="submit"] {
+    background-color: #e74c3c;  /* Red color for Log Out */
+}
+
+.logout-button input[type="submit"]:hover {
+    background-color: #c0392b;  /* Darker red on hover */
+}
+
+/* Center buttons */
+.update-button, .logout-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* For mobile responsiveness */
+@media (max-width: 768px) {
+    .account-container {
+        padding: 15px;
+        margin: 0 10px;
+    }
+
+    .account-container p {
+        font-size: 1em;
+    }
+
+	.update form input[type="submit"]
+    .logout-button form input[type="submit"] {
+        font-size: 1em;
+        padding: 8px 16px;
+    }
+}
