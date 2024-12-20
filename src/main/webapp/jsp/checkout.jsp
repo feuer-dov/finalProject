@@ -30,17 +30,17 @@
 			<form method="get" action="OrderConfirmation">
 	            <div class="input-field">
 	                <label for="shippingAddress">Shipping Address:</label>
-	                <input type="text" name="shippingAddress" id="shippingAddress" required>
+	                <input type="text" name="shippingAddress" id="shippingAddress" value="${sessionScope.def_shipping }" required>
 	            </div>
 	
 	            <div class="input-field">
 	                <label for="billingAddress">Billing Address:</label>
-	                <input type="text" name="billingAddress" id="billingAddress" required>
+	                <input type="text" name="billingAddress" id="billingAddress" value="${sessionScope.def_billing }" required>
 	            </div>
 	            
 	            <div class="input-field">
 	                <label for="creditCardNumber">Credit Card Number</label>
-	                <input type="number" name="creditCardNumber" id="creditCardNumber" required>
+	                <input type="number" name="creditCardNumber" id="creditCardNumber" value="${sessionScope.def_creditCard }" required>
 	            </div>
 	            
 	            <div class="input-field">
