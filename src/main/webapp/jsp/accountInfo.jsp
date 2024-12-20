@@ -29,8 +29,13 @@
 					<input type='hidden' name='action' value='updateInfo' />
 					<input type='hidden' name='username' value='${account.username }' />
 			</div>
-		
+			
 		</form>
+		<div class='update-button'>
+			<form action="UserPurchaseHistory" method="post">
+				<input type='submit' value='View Purchase History' />
+			</form>
+		</div>
 		<div class='logout-button'>
 			<form action="AccountInfo" method="post">
 				<input type='submit' value='Log Out' />

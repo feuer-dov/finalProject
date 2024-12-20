@@ -44,9 +44,11 @@ public class AttemptLogin extends HttpServlet {
 		if(req) {
 			Account user = db.getAccount(username);
 			session.setAttribute("account", user);
-			
 			RequestDispatcher dispatch = null;
-			System.out.println(user.getPriv());
+			
+			System.out.println(user.getUsername());
+			
+			
 			if(user.getPriv() == 2) {
 				dispatch = request.getRequestDispatcher("/AdminView"); //ADMIN USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERED TO ADMINMENU
 				
@@ -59,7 +61,7 @@ public class AttemptLogin extends HttpServlet {
 				}
 				
 				if(checkout) {
-					dispatch = request.getRequestDispatcher("/jsp/checkout.jsp"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO CHECKOUT
+					dispatch = request.getRequestDispatcher("CheckoutServlet"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO CHECKOUT
 					System.out.println("Sending to Checkout");
 				} else {
 				dispatch = request.getRequestDispatcher("/home"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO MAINMENU

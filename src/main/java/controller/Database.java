@@ -559,6 +559,38 @@ public class Database implements DatabaseInterface{
 		return items;
 	}
 	
+	// returns list of items sorted by price
+public List<Item> getAllItemsPriceSortedDesc(){
+		List<Item> items = new ArrayList<Item>();
+		Item item = null;
+		Connection con = null;
+		PreparedStatement statement = null;
+		String sql = "SELECT * FROM ITEMS ORDER BY Price DESC;";
+		
+		try {
+			con = getConnection();
+			statement = con.prepareStatement(sql);
+			ResultSet r = statement.executeQuery();
+			
+			while(r.next()) {
+				item = new Item(r.getString(1), r.getInt(2), r.getString(3), r.getString(4), r.getString(5), r.getDouble(6), r.getInt(7));
+				items.add(item);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			closeConnection(con);
+		}
+		
+		return items;
+	}
+	
 	/*
 	 * Takes category name as parameter and returns an ArrayList of Items with category = parameter name
 	 */

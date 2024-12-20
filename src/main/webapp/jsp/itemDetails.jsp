@@ -21,7 +21,7 @@
 			<jsp:include page='sidebar.jsp' />
 			<div class='item-details'>
 				<div class="item-image">
-	                <img src="https://via.placeholder.com/300" alt="${item.name}" />
+	                <img src="img/img${item.id }.jpg" alt="${item.name}" />
 	            </div>
 	            <div class="item-info">
 	            	<h2>${item.name }</h2>
