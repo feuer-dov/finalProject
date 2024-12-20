@@ -25,6 +25,12 @@
 		<jsp:include page="header.jsp" />
 	    <h1>Shopping Cart</h1>
 	
+		<c:choose>
+			<c:when test="${requestScope.cartError == 1}">
+				<p class="error-message">Credit Card Authorization Failed, Please Try Again</p>
+			</c:when>
+		</c:choose>
+	
 	    <c:if test="${cart != null and cart.isEmpty() == false}">
 	        <div class="cart-items-container">
 	            <c:forEach items="${cart.items}" var="item">
