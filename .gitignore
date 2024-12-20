@@ -1,0 +1,15 @@
+# Ignore macOS system files
+.DS_Store
+
+# Ignore build directory and its contents
+/build/
+
+# Ignore compiled Java class files
+*.class
+
+# Ignore IDE files
+.idea/
+.vscode/
+
+# Ignore logs
+*.log
