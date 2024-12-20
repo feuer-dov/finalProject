@@ -15,7 +15,7 @@
 		<jsp:include page="header.jsp" />
 		<div class='login-container'>
 			<h2>Create an Account</h2>
-			<form method="get" action="CreateAccountServlet">
+			<form method="post" action="CreateAccountServlet">
     <div class="input-field">
         <label for="name">Name:</label>
         <input type="text" name="name" id="name" required>
