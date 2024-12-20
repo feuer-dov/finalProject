@@ -38,6 +38,9 @@ public class OrderConfirmationServlet extends HttpServlet {
 		
 	    HttpSession session = request.getSession(true);
 	    
+	    //used when cart has more than stock
+	    boolean errorCart = false;
+	    
 	    //credit card authorization algorithm
 	    //just randomly fails half the cards
 	    Random r = new Random();
@@ -49,6 +52,7 @@ public class OrderConfirmationServlet extends HttpServlet {
 	    
 	    Sale sale = (Sale) session.getAttribute("sale");
 	    Database db = new Database(request.getServletContext());
+	    Cart cart = (Cart) session.getAttribute("cart");
 	    
 		ArrayList<Integer> quantity = sale.getQuantity();
 		ArrayList<Integer> newStock = new ArrayList<>();
@@ -58,11 +62,18 @@ public class OrderConfirmationServlet extends HttpServlet {
 			int current = db.getItemQty(i) - quantity.get(j);
 			
 			//check to see the stock for any items went negative
+			//update the cart to the new max amount if they did
 			if (current < 0 ) {
-	    		String target = "/final/ShoppingCart";
-	    		request.getRequestDispatcher(target).forward(request, response);
+	    		errorCart = true;
+	    		cart.updateItem(i, db.getItemQty(i));
 			} else
 				newStock.add(current);
+		}
+		
+		if (errorCart) {
+			String target = "/final/ShoppingCart";
+			session.setAttribute("cartError", 1);
+			request.getRequestDispatcher(target).forward(request, response);
 		}
 		
 		//update stock in db
@@ -76,12 +87,11 @@ public class OrderConfirmationServlet extends HttpServlet {
 	    db.finalizeSale(sale);	    
 		
 		//clear cart
-		Cart cart = (Cart) session.getAttribute("cart");
 		String total = "$" + cart.getTotal();
 		request.setAttribute("total", total);
 		
 		//forward to JSP
-		String target = "NO.jsp";
+		String target = "/jsp/OrderConfirmationView.jsp";
 		request.getRequestDispatcher(target).forward(request, response);	
 	}
 

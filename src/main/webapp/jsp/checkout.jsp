@@ -19,13 +19,10 @@
 		<div class='login-container'>
 		<c:choose>
 			<c:when test="${requestScope.cardFailed == 1}">
-				<p>Credit Card Authorization Failed, Please Try Again</p>
+				<p class="error-message">Credit Card Authorization Failed, Please Try Again</p>
 			</c:when>
-			<c:otherwise>
-				<p>Checkout</p>
-			</c:otherwise>
 		</c:choose>
-
+		<p>Checkout</p>
 			<p>
 				Total Price: $<fmt:formatNumber value="${cart.total}" pattern="#0.00" />
 			</p>

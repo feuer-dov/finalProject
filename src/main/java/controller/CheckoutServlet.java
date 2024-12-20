@@ -68,7 +68,7 @@ public class CheckoutServlet extends HttpServlet {
 		    int transactionId = db.getAllSales().size();
 		    double total = cart.getTotal();
 		    
-		    Sale sale = new Sale(acc.getUsername(), total, itemIds, quantity, transactionId);
+		    Sale sale = new Sale(acc.getUsername(), total, itemIds, quantity, transactionId, shipping, creditCard);
 		    session.setAttribute("sale", sale);
 		    
 		    String target = "/jsp/checkout.jsp";
