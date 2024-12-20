@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -35,8 +36,14 @@ public class SalesHistory extends HttpServlet {
 		
 		Database db = new Database(request.getServletContext());
 		List<Sale> sales = db.getAllSales();
-		request.setAttribute("sales", sales);
 		
+		if(request.getParameter("filterName") != null && !request.getParameter("filterName").isEmpty()) {
+			String username = (String) request.getAttribute("filterName");
+			sales = db.getAllSalesByUsername(username);
+			System.out.println("Filtering Sale");
+		}
+		
+		request.setAttribute("sales", sales);
 		
 		
 		RequestDispatcher dispatch = request.getRequestDispatcher("/jsp/SalesHistory.jsp");

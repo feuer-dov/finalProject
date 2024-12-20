@@ -52,9 +52,12 @@ public class AttemptLogin extends HttpServlet {
 				
 				System.out.println("Sending to Admin Page");
 			}else {
-				boolean checkout = (boolean) session.getAttribute("sendToCheckout");
-				session.setAttribute("sendToCheckout", false);
-					
+				boolean checkout = false;
+				if(session.getAttribute("sendToCheckout") != null) {
+					checkout = (boolean) session.getAttribute("sendToCheckout");
+					session.setAttribute("sendToCheckout", false);
+				}
+				
 				if(checkout) {
 					dispatch = request.getRequestDispatcher("/jsp/checkout.jsp"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO CHECKOUT
 					System.out.println("Sending to Checkout");

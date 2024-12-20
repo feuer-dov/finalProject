@@ -23,7 +23,7 @@ public class Sale implements Serializable{
 	}
 	
 	public String getCCNumber() {
-		return this.getCCNumber();
+		return this.ccNumber;
 	}
 	
 	public void setCCNumber(String newCC) {
