@@ -782,7 +782,7 @@ public class Database implements DatabaseInterface{
 						ObjectInputStream objectStream2 = new ObjectInputStream(inputStream2);
 						itemIds = (ArrayList<Integer>) objectStream1.readObject();
 						itemQtys = (ArrayList<Integer>) objectStream2.readObject();
-						sale = new Sale(r.getString(1), r.getDouble(5), itemIds, itemQtys, r.getInt(4));
+						sale = new Sale(r.getString(1), r.getDouble(5), itemIds, itemQtys, r.getInt(4), r.getString(6), r.getString(7));
 						break;
 					}catch(Exception e) {
 						e.printStackTrace();
@@ -817,7 +817,7 @@ public class Database implements DatabaseInterface{
 	public boolean finalizeSale(Sale s) {
 		Connection con = null;
 		PreparedStatement statement = null;
-		String sql = "INSERT INTO PURCHASE_HISTORY(Cust_Username, Item_Id, Quantity, Transaction_Id, Total) VALUES (?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO PURCHASE_HISTORY(Cust_Username, Item_Id, Quantity, Transaction_Id, Total, Address, CCNum) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		
 		try {
 			con = getConnection();
@@ -842,6 +842,8 @@ public class Database implements DatabaseInterface{
 				statement.setObject(3, qtyData);
 				statement.setInt(4, s.getTransactionId());
 				statement.setDouble(5, s.getTotal());
+				statement.setString(6, s.getShippingAddress());
+				statement.setString(7, s.getCCNumber());
 				
 				statement.executeUpdate();
 			} catch (Exception e) {
@@ -893,7 +895,7 @@ public class Database implements DatabaseInterface{
 					ArrayList<Integer> itemIds = (ArrayList<Integer>) objectStream1.readObject();
 					ArrayList<Integer> itemQtys = (ArrayList<Integer>) objectStream2.readObject();
 					
-					sale = new Sale(r.getString(1), r.getDouble(5), itemIds, itemQtys, r.getInt(4));
+					sale = new Sale(r.getString(1), r.getDouble(5), itemIds, itemQtys, r.getInt(4), r.getString(6), r.getString(7));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -944,7 +946,7 @@ public class Database implements DatabaseInterface{
 					ArrayList<Integer> itemIds = (ArrayList<Integer>) objectStream1.readObject();
 					ArrayList<Integer> itemQtys = (ArrayList<Integer>) objectStream2.readObject();
 					
-					Sale sale = new Sale(rs.getString(1), rs.getDouble(5), itemIds, itemQtys, rs.getInt(4));
+					Sale sale = new Sale(rs.getString(1), rs.getDouble(5), itemIds, itemQtys, rs.getInt(4), rs.getString(6), rs.getString(7));
 					result.add(sale);
 				}
 			}
