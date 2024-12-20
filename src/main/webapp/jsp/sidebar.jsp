@@ -6,8 +6,12 @@
 		<input type='submit' value='All (A-Z)' />
 	</form>
 	<form action='home'>
-		<input type='submit' value='All (By Price)' />
-		<input type='hidden' name='byPrice' value='true'/>
+		<input type='submit' value='All (By Price Ascending)' />
+		<input type='hidden' name='byPrice' value='asc'/>
+	</form>
+	<form action='home'>
+		<input type='submit' value='All (By Price Descending)' />
+		<input type='hidden' name='byPrice' value='desc'/>
 	</form>
 	<h3>Categories</h3>
 	<c:forEach var="cat" items="${categories }">

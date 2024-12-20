@@ -52,19 +52,19 @@ public class CheckoutServlet extends HttpServlet {
 		    Cart cart = (Cart) session.getAttribute("cart");
 		    if (cart == null || cart.isEmpty()) {
 		    	session.setAttribute("emptyCart", true);
-				String target = "/final/ShoppingCart";
+				String target = "ShoppingCart";
 			  
 				request.getRequestDispatcher(target).forward(request, response);
 		    }
 		    
 		
-		    String target = "/jsp/checkout.jsp";
+		    String target = "jsp/checkout.jsp";
 		    request.getRequestDispatcher(target).forward(request, response);
 		    
 		} else {
 
 			session.setAttribute("sendToCheckout", true);
-			String target = "/jsp/LoginPage.jsp";
+			String target = "jsp/LoginPage.jsp";
 		  
 			request.getRequestDispatcher(target).forward(request, response);
 		}

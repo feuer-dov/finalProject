@@ -37,5 +37,6 @@ public interface DatabaseInterface {
 	List<Item> getAllItemsPriceSorted();
 	List<Sale> getAllSalesByUsername(String username);
 	List<Item> getItemsBySearchQuery(String query);
-	
+    List<Item> getAllItemsPriceSortedDesc();
+
 }

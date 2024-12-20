@@ -58,7 +58,13 @@ public class HomePageServlet extends HttpServlet {
 			itemsToDisplay = db.getItemsByBrand(brand);
 		}
 		else if(byPrice != null) {
-			itemsToDisplay = db.getAllItemsPriceSorted();
+
+			if(byPrice.equals("desc")) {
+				itemsToDisplay = db.getAllItemsPriceSortedDesc();
+			}
+			else {
+				itemsToDisplay = db.getAllItemsPriceSorted();
+			}
 		}
 		else if(searchQuery != null) {
 			itemsToDisplay = db.getItemsBySearchQuery(searchQuery);

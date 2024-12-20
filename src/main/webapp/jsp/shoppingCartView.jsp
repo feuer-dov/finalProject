@@ -36,8 +36,7 @@
 	            <c:forEach items="${cart.items}" var="item">
 	                <div class='cart-item-view'>
 	                    <div class="item-image">
-	                        <img src="https://via.placeholder.com/300" alt="${item.name}" />
-	                    </div>
+ 							<img src="img/img${item.id }.jpg" alt="${item.name}" />	                    </div>
 	                    <div class="item-details">
 	                        <h2>${item.name}</h2>
 	                        <p>${item.description}</p>
