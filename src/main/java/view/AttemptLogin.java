@@ -56,7 +56,7 @@ public class AttemptLogin extends HttpServlet {
 				session.setAttribute("sendToCheckout", false);
 					
 				if(checkout) {
-					dispatch = request.getRequestDispatcher("/jsp/CheckoutView.jsp"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO CHECKOUT
+					dispatch = request.getRequestDispatcher("/jsp/checkout.jsp"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO CHECKOUT
 					System.out.println("Sending to Checkout");
 				} else {
 				dispatch = request.getRequestDispatcher("/home"); //GENERAL USER HAS LOGGED IN SUCCESSFULLY AND WILL BE TRANSFERRED TO MAINMENU
